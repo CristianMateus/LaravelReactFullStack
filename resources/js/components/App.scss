@@ -1,4 +1,7 @@
+// Google Fonts
 @import url("https://fonts.googleapis.com/css?family=Karla|Rubik&display=swap");
+// Ant Design
+@import '../../../node_modules/antd/dist/antd.css';
 
 body,
 #app {
@@ -14,6 +17,7 @@ h4,
 h5 {
     font-family: "Rubik", sans-serif;
     margin: 0;
+    margin-bottom: 0 !important;
 }
 
 span,

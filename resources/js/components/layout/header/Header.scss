@@ -1,5 +1,6 @@
 .Header__container {
     padding: 0 0.8em;
+    border-bottom: 1px solid black;
 }
 
 .Header__icons {
@@ -10,6 +11,6 @@
     justify-content: space-between;
 }
 
-.Header__icon{
-    cursor: pointer
+.Header__icon {
+    cursor: pointer;
 }

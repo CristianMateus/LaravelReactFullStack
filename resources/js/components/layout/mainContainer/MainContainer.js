@@ -1,7 +1,10 @@
 // Componentes Propios
 import Header from "../header/Header";
-import Company from "../../modules/company/Company";
 import Home from "../../modules/home/Home";
+import Companies from "../../modules/companies/Companies";
+import Users from "../../modules/users/Users";
+import Roles from "../../modules/roles/Roles";
+import Modules from "../../modules/modules/Modules";
 
 // Estilos
 import "./MainContainer.scss";
@@ -17,7 +20,10 @@ const MainContainer = () => {
             <div className="MainContainer__componentToShow">
                 <Switch>
                     <Route path="/" exact component={Home} />
-                    <Route path="/companies" component={Company} />
+                    <Route path="/companies" component={Companies} />
+                    <Route path="/users" component={Users} />
+                    <Route path="/roles" component={Roles} />
+                    <Route path="/modules" component={Modules} />
                     <Route render={() => <h1>No Encontrado</h1>} />
                 </Switch>
             </div>

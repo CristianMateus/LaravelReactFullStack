@@ -1,6 +1,20 @@
-.ComponentContainer__container{
+.ComponentContainer__container {
     height: calc(100% - 1.5em);
+    padding: 0.5em;
     display: grid;
     grid-template-rows: 2em auto;
-    padding: 0.5em;
+    grid-gap: 1em;
+}
+
+.ComponentContainer__title {
+    display: flex;
+    align-items: center;
+    padding: 0 0.4em;
+}
+
+.ComponentContainer__title,
+.ComponentContainer__component {
+    border: 1px solid black;
+    border-radius: 0.5em;
+    padding: 0.4em
 }
