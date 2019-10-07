@@ -1,0 +1,6 @@
+.ComponentContainer__container{
+    height: calc(100% - 1.5em);
+    display: grid;
+    grid-template-rows: 2em auto;
+    padding: 0.5em;
+}

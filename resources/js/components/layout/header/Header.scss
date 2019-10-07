@@ -1,0 +1,15 @@
+.Header__container {
+    padding: 0 0.8em;
+}
+
+.Header__icons {
+    height: 100%;
+    width: 12em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Header__icon{
+    cursor: pointer
+}

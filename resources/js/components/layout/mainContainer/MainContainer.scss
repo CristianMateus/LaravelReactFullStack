@@ -1,0 +1,9 @@
+.MainContainer__container {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 6% auto;
+}
+
+.MainContainer__componentToShow {
+    background-color: lightblue;
+}
