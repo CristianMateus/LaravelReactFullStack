@@ -1,5 +1,5 @@
-// AntDesign
-import { Tooltip } from "antd";
+// Componentes Propios
+import Avatar from "./components/avatar/Avatar";
 
 // Estilos
 import "./Header.scss";
@@ -9,23 +9,20 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 
 const Header = ({ history }) => {
-    const icons = [
-        { name: "Usuarios", icon: "fas fa-users", route: "/users" },
-        { name: "Roles", icon: "fas fa-user-cog", route: "/roles" },
-        { name: "Compañías", icon: "fas fa-building", route: "/companies" },
-        { name: "Modulos", icon: "fas fa-solar-panel", route: "/modules" }
-    ];
     return (
         <div className="Header__container">
-            <div className="Header__icons">
-                {icons.map((icon, index) => (
-                    <Tooltip title={icon.name}   key={index}>
-                        <i
-                            className={[icon.icon, "Header__icon"].join(" ")}
-                            onClick={() => history.push(icon.route)}
-                        />
-                    </Tooltip>
-                ))}
+            {/* Botón Casa */}
+            <div className="Header__home-button">
+                <i
+                    className={["fas fa-home", "Header__home-button-icon"].join(
+                        " "
+                    )}
+                    onClick={() => history.push("/")}
+                />
+            </div>
+            {/* Sección Derecha */}
+            <div className="Header__right-section">
+                <Avatar/>
             </div>
         </div>
     );

@@ -1,3 +1,5 @@
+@import '../../shared/styles/global.scss';
+
 .MainContainer__container {
     height: 100%;
     display: grid;
@@ -5,4 +7,8 @@
 }
 
 .MainContainer__componentToShow {
+    background-color: $secondary-background-color;
+    color: $secondary-text-color;
+    display: grid;
+    grid-template-columns: 4em calc(100% - 4em);
 }

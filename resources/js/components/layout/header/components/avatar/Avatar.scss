@@ -1,0 +1,14 @@
+@import '../../../../shared/styles/global.scss';
+
+.Avatar__container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 2em;
+    width: 10em;
+
+    img{
+        height: 100%;
+        border-radius: 50%;
+    }
+}

@@ -1,5 +1,6 @@
 // Componentes Propios
 import Header from "../header/Header";
+import SideDrawer from "../sideDrawer/SideDrawer";
 import Home from "../../modules/home/Home";
 import Companies from "../../modules/companies/Companies";
 import Users from "../../modules/users/Users";
@@ -18,6 +19,7 @@ const MainContainer = () => {
         <div className="MainContainer__container">
             <Header />
             <div className="MainContainer__componentToShow">
+                <SideDrawer/>
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/companies" component={Companies} />

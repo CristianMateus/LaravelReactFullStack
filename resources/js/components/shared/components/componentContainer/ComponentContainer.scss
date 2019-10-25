@@ -1,3 +1,5 @@
+@import '../../styles/global.scss';
+
 .ComponentContainer__container {
     height: calc(100% - 1.5em);
     padding: 0.5em;
@@ -6,15 +8,18 @@
     grid-gap: 1em;
 }
 
+.ComponentContainer__title,
+.ComponentContainer__component {
+    border-radius: 0.5em;
+    padding: 0.4em
+}
+
 .ComponentContainer__title {
     display: flex;
     align-items: center;
-    padding: 0 0.4em;
+    justify-content: space-between;
 }
 
-.ComponentContainer__title,
 .ComponentContainer__component {
-    border: 1px solid black;
-    border-radius: 0.5em;
-    padding: 0.4em
+    border: 1px solid $main-border-color;
 }

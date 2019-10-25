@@ -1,16 +1,28 @@
+@import "../../shared/styles/global.scss";
+
 .Header__container {
-    padding: 0 0.8em;
-    border-bottom: 1px solid black;
+    display: grid;
+    grid-template-columns: 4em calc(100% - 4em);
+    background-color: $header-background-color;
+    color: $header-text-color;
+    border-bottom: 1px solid $main-border-color;
 }
 
-.Header__icons {
-    height: 100%;
-    width: 12em;
+.Header__home-button {
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
 }
 
-.Header__icon {
-    cursor: pointer;
+.Header__home-button-icon {
+    font-size: 1.6em;
+}
+
+.Header__right-section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 1em;
 }

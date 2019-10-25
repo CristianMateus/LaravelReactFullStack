@@ -1,0 +1,30 @@
+@import '../../shared/styles/global.scss';
+
+.SideDrawer__container {
+    border-right: 1px solid $main-border-color;
+    background-color: $sideDrawer-background-color;
+    color: $sideDrawer-text-color;
+    padding: 0.7em;
+}
+
+.SideDrawer__icons {
+    display: grid;
+    grid-gap: 1.2em;
+}
+
+.SideDrawer__icon {
+    justify-self: center;
+    height: 2em;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease-in-out;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.SideDrawer__icon:hover{
+    background-color: $sideDrawer-background-color-hover;
+    color: $sideDrawer-text-color-hover
+}
