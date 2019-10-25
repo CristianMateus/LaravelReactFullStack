@@ -83,6 +83,15 @@ const Roles = () => {
         }, 2000);
     };
 
+    const deleteRole = async () => {
+        setShowButtonLoadingState(true);
+        setTimeout(() => {
+            console.log('eliminar rol', selectedItemState)
+            setShowButtonLoadingState(false);
+            setShowDeleteRoleModalState(false);
+        }, 2000);
+    };
+
     const onDeleteClicked = item => {
         setSelectedItemState(item);
         setShowDeleteRoleModalState(true);
@@ -109,7 +118,7 @@ const Roles = () => {
                         selectedItemState ? selectedItemState.name : null
                     }`}
                     visible={showDeleteRoleModalState}
-                    onOk={() => addRole()}
+                    onOk={() => deleteRole()}
                     confirmLoading={showButtonLoadingState}
                     onCancel={() => setShowDeleteRoleModalState(false)}
                 >

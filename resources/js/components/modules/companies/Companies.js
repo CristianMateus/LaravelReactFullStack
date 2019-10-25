@@ -92,6 +92,15 @@ const Company = () => {
         }, 2000);
     };
 
+    const deleteCompany = async () => {
+        setShowButtonLoadingState(true);
+        setTimeout(() => {
+            console.log('eliminar compañía', selectedItemState)
+            setShowButtonLoadingState(false);
+            setshowDeleteCompanyModalState(false);
+        }, 2000);
+    };
+
     const onDeleteClicked = item => {
         setSelectedItemState(item);
         setshowDeleteCompanyModalState(true);
@@ -118,7 +127,7 @@ const Company = () => {
                         selectedItemState ? selectedItemState.name : null
                     }`}
                     visible={showDeleteCompanyModalState}
-                    onOk={() => addModule()}
+                    onOk={() => deleteCompany()}
                     confirmLoading={showButtonLoadingState}
                     onCancel={() => setshowDeleteCompanyModalState(false)}
                 >

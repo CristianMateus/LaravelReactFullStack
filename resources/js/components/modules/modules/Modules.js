@@ -36,25 +36,6 @@ const Modules = () => {
             setAllModulesState(response);
         });
     };
-
-    const addModule = async (updatedModule) => {
-        setShowButtonLoadingState(true);
-        console.log('addModule', updatedModule)
-        setTimeout(() => {
-            setShowButtonLoadingState(false);
-            setShowAddModuleModalState(false);
-        }, 2000);
-    };
-
-    const updateModule = async (updatedModule) => {
-        setShowButtonLoadingState(true);
-        console.log('updateModule', updatedModule)
-        setTimeout(() => {
-            setShowButtonLoadingState(false);
-            setShowUpdateModuleModalState(false);
-        }, 2000);
-    };
-
     const columns = [
         {
             title: "Id",
@@ -92,6 +73,33 @@ const Modules = () => {
         }
     ];
 
+    const addModule = async (updatedModule) => {
+        setShowButtonLoadingState(true);
+        console.log('addModule', updatedModule)
+        setTimeout(() => {
+            setShowButtonLoadingState(false);
+            setShowAddModuleModalState(false);
+        }, 2000);
+    };
+
+    const updateModule = async (updatedModule) => {
+        setShowButtonLoadingState(true);
+        console.log('updateModule', updatedModule)
+        setTimeout(() => {
+            setShowButtonLoadingState(false);
+            setShowUpdateModuleModalState(false);
+        }, 2000);
+    };
+    
+    const deleteModule = async () => {
+        setShowButtonLoadingState(true);
+        setTimeout(() => {
+            console.log('eliminar modulo', selectedItemState)
+            setShowButtonLoadingState(false);
+            setShowDeleteModuleModalState(false);
+        }, 2000);
+    };
+
     const onDeleteClicked = item => {
         setSelectedItemState(item);
         setShowDeleteModuleModalState(true);
@@ -118,7 +126,7 @@ const Modules = () => {
                         selectedItemState ? selectedItemState.name : null
                     }`}
                     visible={showDeleteModuleModalState}
-                    onOk={() => addModule()}
+                    onOk={() => deleteModule()}
                     confirmLoading={showButtonLoadingState}
                     onCancel={() => setShowDeleteModuleModalState(false)}
                 >

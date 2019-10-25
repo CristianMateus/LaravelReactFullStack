@@ -98,6 +98,15 @@ const Users = () => {
         }, 2000);
     };
 
+    const deleteUser = async () => {
+        setShowButtonLoadingState(true);
+        setTimeout(() => {
+            console.log('eliminar usuario', selectedItemState)
+            setShowButtonLoadingState(false);
+            setShowDeleteUserModalState(false);
+        }, 2000);
+    };
+
     const onDeleteClicked = item => {
         setSelectedItemState(item)
         setShowDeleteUserModalState(true);
@@ -124,7 +133,7 @@ const Users = () => {
                         selectedItemState ? selectedItemState.name : null
                     }`}
                     visible={showDeleteUserModalState}
-                    onOk={() => addUser()}
+                    onOk={() => deleteUser()}
                     confirmLoading={showButtonLoadingState}
                     onCancel={() => setShowDeleteUserModalState(false)}
                 >
