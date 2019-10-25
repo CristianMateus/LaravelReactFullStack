@@ -8,3 +8,13 @@ export const getAllCompanies = async () => {
         })
         .catch(error => console.error(error));
 };
+
+
+export const deleteCompany = async (company) => {
+    return await axios
+        .delete("/api/company", company)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => console.error(error));
+};

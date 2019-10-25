@@ -3,13 +3,16 @@ import ComponentContainer from "../../shared/components/componentContainer/Compo
 import EditCompanyForm from "./components/editCompanyForm/EditCompanyForm";
 
 // Ant Design
-import { Table, Divider, Modal, Form, Input } from "antd";
+import { Table, Divider, Modal } from "antd";
 
 // React
 import React, { useEffect, useState } from "react";
 
 // Servicios
-import { getAllCompanies } from "../../shared/services/CompanyServices";
+import {
+    getAllCompanies,
+    deleteCompany
+} from "../../shared/services/CompanyServices";
 
 const Company = () => {
     useEffect(() => {
@@ -94,11 +97,21 @@ const Company = () => {
 
     const deleteCompany = async () => {
         setShowButtonLoadingState(true);
-        setTimeout(() => {
-            console.log('eliminar compañía', selectedItemState)
-            setShowButtonLoadingState(false);
-            setshowDeleteCompanyModalState(false);
-        }, 2000);
+        await deleteCompany(selectedItemState)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                setshowDeleteCompanyModalState(false);
+                getAllCompanies();
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        // setTimeout(() => {
+        //     console.log('eliminar compañía', selectedItemState)
+        //     setShowButtonLoadingState(false);
+        //     setshowDeleteCompanyModalState(false);
+        // }, 2000);
     };
 
     const onDeleteClicked = item => {

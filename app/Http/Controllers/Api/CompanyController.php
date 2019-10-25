@@ -38,7 +38,9 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $company = Company::create($request->all());
+ 
+        return response()->json($company, 201);
     }
 
     /**
@@ -70,9 +72,18 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Company $company)
     {
-        //
+        $company->update($request->all());
+ 
+        return response()->json($company, 200);
+    }
+
+    public function delete(Company $company)
+    {
+        $company->delete();
+ 
+        return response()->json(null, 204);
     }
 
     /**
