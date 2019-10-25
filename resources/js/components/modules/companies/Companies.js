@@ -1,5 +1,6 @@
 // Componentes Propios
 import ComponentContainer from "../../shared/components/componentContainer/ComponentContainer";
+import EditCompanyForm from "./components/editCompanyForm/EditCompanyForm";
 
 // Ant Design
 import { Table, Divider, Modal, Form, Input } from "antd";
@@ -73,11 +74,21 @@ const Company = () => {
         });
     };
 
-    const addCompany = async () => {
+    const addCompany = async updatedCompany => {
         setShowButtonLoadingState(true);
+        console.log(updatedCompany);
         setTimeout(() => {
             setShowButtonLoadingState(false);
             setshowAddCompanyModalState(false);
+        }, 2000);
+    };
+
+    const updateCompany = async updatedCompany => {
+        setShowButtonLoadingState(true);
+        console.log(updatedCompany);
+        setTimeout(() => {
+            setShowButtonLoadingState(false);
+            setshowUpdateCompanyModalState(false);
         }, 2000);
     };
 
@@ -94,22 +105,14 @@ const Company = () => {
     const pageModals = () => {
         return (
             <React.Fragment>
-                <Modal
-                    title="Añadir compañía"
-                    visible={showAddCompanyModalState}
-                    onOk={() => addCompany()}
-                    confirmLoading={showButtonLoadingState}
-                    onCancel={() => setshowAddCompanyModalState(false)}
-                >
-                    <Form>
-                        <Form.Item label="Nombre">
-                            <Input />
-                        </Form.Item>
-                        <Form.Item label="Nit">
-                            <Input />
-                        </Form.Item>
-                    </Form>
-                </Modal>
+                {/* Nueva Compañía */}
+                <EditCompanyForm
+                    showModal={showAddCompanyModalState}
+                    onSaveClicked={updatedCompany => addCompany(updatedCompany)}
+                    onCancelClicked={() => setshowAddCompanyModalState(false)}
+                    showLoading={showButtonLoadingState}
+                />
+                {/* Eliminar Compañia */}
                 <Modal
                     title={`Eliminar compañía ${
                         selectedItemState ? selectedItemState.name : null
@@ -121,24 +124,18 @@ const Company = () => {
                 >
                     <p>Esta seguro de querer eliminar esta compañía?</p>
                 </Modal>
-                <Modal
-                    title={`Actualizar compañía ${
-                        selectedItemState ? selectedItemState.name : null
-                    }`}
-                    visible={showUpdateCompanyModalState}
-                    onOk={() => addModule()}
-                    confirmLoading={showButtonLoadingState}
-                    onCancel={() => setshowUpdateCompanyModalState(false)}
-                >
-                    <Form>
-                        <Form.Item label="Nombre">
-                            <Input />
-                        </Form.Item>
-                        <Form.Item label="Nit">
-                            <Input />
-                        </Form.Item>
-                    </Form>
-                </Modal>
+                {/* Actualizar Compañia */}
+                <EditCompanyForm
+                    company={selectedItemState}
+                    showModal={showUpdateCompanyModalState}
+                    onSaveClicked={updatedCompany =>
+                        updateCompany(updatedCompany)
+                    }
+                    onCancelClicked={() =>
+                        setshowUpdateCompanyModalState(false)
+                    }
+                    showLoading={showButtonLoadingState}
+                />
             </React.Fragment>
         );
     };
