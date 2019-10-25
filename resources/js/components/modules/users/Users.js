@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 
 // Servicios
 import { getAllUsers } from "../../shared/services/UserServices";
+import EditUserForm from "./components/editUserForm/EditUserForm";
 
 const Users = () => {
     useEffect(() => {
@@ -79,11 +80,21 @@ const Users = () => {
         });
     };
 
-    const addUser = async () => {
+    const addUser = async (updatedUser) => {
         setShowButtonLoadingState(true);
         setTimeout(() => {
+            console.log('addUser', updatedUser)
             setShowButtonLoadingState(false);
             setShowAddUserModalState(false);
+        }, 2000);
+    };
+
+    const updateUser = async (updatedUser) => {
+        setShowButtonLoadingState(true);
+        setTimeout(() => {
+            console.log('updateUser', updatedUser)
+            setShowButtonLoadingState(false);
+            setShowUpdateUserModalState(false);
         }, 2000);
     };
 
@@ -100,15 +111,14 @@ const Users = () => {
     const pageModals = () => {
         return (
             <React.Fragment>
-                <Modal
-                    title="Añadir usuario"
-                    visible={showAddUserModalState}
-                    onOk={() => addUser()}
-                    confirmLoading={showButtonLoadingState}
-                    onCancel={() => setShowAddUserModalState(false)}
-                >
-                    <p>Formulario</p>
-                </Modal>
+                {/* Añadir usuario */}
+                <EditUserForm
+                    showModal={showAddUserModalState}
+                    onSaveClicked={updatedUser => addUser(updatedUser)}
+                    onCancelClicked={() => setShowAddUserModalState(false)}
+                    showLoading={showButtonLoadingState}
+                />
+                {/* Eliminar usuario */}
                 <Modal
                     title={`Eliminar usuario ${
                         selectedItemState ? selectedItemState.name : null
@@ -120,17 +130,18 @@ const Users = () => {
                 >
                     <p>Esta seguro de querer eliminar este usuario?</p>
                 </Modal>
-                <Modal
-                    title={`Actualizar usuario ${
-                        selectedItemState ? selectedItemState.name : null
-                    }`}
-                    visible={showUpdateUserModalState}
-                    onOk={() => addUser()}
-                    confirmLoading={showButtonLoadingState}
-                    onCancel={() => setShowUpdateUserModalState(false)}
-                >
-                    <h1>Actualizar</h1>
-                </Modal>
+                {/* Actualizar usuario */}
+                <EditUserForm
+                    user={selectedItemState}
+                    showModal={showUpdateUserModalState}
+                    onSaveClicked={updatedUser =>
+                        updateUser(updatedUser)
+                    }
+                    onCancelClicked={() =>
+                        setShowUpdateUserModalState(false)
+                    }
+                    showLoading={showButtonLoadingState}
+                />
             </React.Fragment>
         );
     };

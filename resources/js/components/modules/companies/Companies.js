@@ -76,7 +76,7 @@ const Company = () => {
 
     const addCompany = async updatedCompany => {
         setShowButtonLoadingState(true);
-        console.log(updatedCompany);
+        console.log("nueva compañía", updatedCompany);
         setTimeout(() => {
             setShowButtonLoadingState(false);
             setshowAddCompanyModalState(false);
@@ -85,7 +85,7 @@ const Company = () => {
 
     const updateCompany = async updatedCompany => {
         setShowButtonLoadingState(true);
-        console.log(updatedCompany);
+        console.log("actualizarcompañía", updatedCompany);
         setTimeout(() => {
             setShowButtonLoadingState(false);
             setshowUpdateCompanyModalState(false);

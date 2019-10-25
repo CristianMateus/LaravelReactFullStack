@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 
 // Servicios
 import { getAllModules } from "../../shared/services/ModuleServices";
+import EditModuleForm from "./components/editModuleForm/EditModuleForm";
 
 const Modules = () => {
     useEffect(() => {
@@ -36,11 +37,21 @@ const Modules = () => {
         });
     };
 
-    const addModule = async () => {
+    const addModule = async (updatedModule) => {
         setShowButtonLoadingState(true);
+        console.log('addModule', updatedModule)
         setTimeout(() => {
             setShowButtonLoadingState(false);
-            setShowModalState(false);
+            setShowAddModuleModalState(false);
+        }, 2000);
+    };
+
+    const updateModule = async (updatedModule) => {
+        setShowButtonLoadingState(true);
+        console.log('updateModule', updatedModule)
+        setTimeout(() => {
+            setShowButtonLoadingState(false);
+            setShowUpdateModuleModalState(false);
         }, 2000);
     };
 
@@ -68,13 +79,13 @@ const Modules = () => {
                     <i
                         className="far fa-trash-alt"
                         onClick={() => onDeleteClicked(record)}
-                        style={{cursor: 'pointer'}}
+                        style={{ cursor: "pointer" }}
                     />
                     <Divider type="vertical" />
                     <i
                         className="fas fa-pen"
                         onClick={() => onUpdateClicked(record)}
-                        style={{cursor: 'pointer'}}
+                        style={{ cursor: "pointer" }}
                     />
                 </span>
             )
@@ -94,15 +105,14 @@ const Modules = () => {
     const pageModals = () => {
         return (
             <React.Fragment>
-                <Modal
-                    title="Añadir módulo"
-                    visible={showAddModuleModalState}
-                    onOk={() => addModule()}
-                    confirmLoading={showButtonLoadingState}
-                    onCancel={() => setShowAddModuleModalState(false)}
-                >
-                    <p>Formulario</p>
-                </Modal>
+                {/* Añadir modulo */}
+                <EditModuleForm
+                    showModal={showAddModuleModalState}
+                    onSaveClicked={updatedModule => addModule(updatedModule)}
+                    onCancelClicked={() => setShowAddModuleModalState(false)}
+                    showLoading={showButtonLoadingState}
+                />
+                {/* Eliminar modulo */}
                 <Modal
                     title={`Eliminar módulo ${
                         selectedItemState ? selectedItemState.name : null
@@ -114,17 +124,16 @@ const Modules = () => {
                 >
                     <p>Esta seguro de querer eliminar este modulo?</p>
                 </Modal>
-                <Modal
-                    title={`Actualizar módulo ${
-                        selectedItemState ? selectedItemState.name : null
-                    }`}
-                    visible={showUpdateModuleModalState}
-                    onOk={() => addModule()}
-                    confirmLoading={showButtonLoadingState}
-                    onCancel={() => setShowUpdateModuleModalState(false)}
-                >
-                    <h1>Actualizar</h1>
-                </Modal>
+                {/* Actualizar modulo */}
+                <EditModuleForm
+                    moduleToUpdate={selectedItemState}
+                    showModal={showUpdateModuleModalState}
+                    onSaveClicked={updatedModule =>
+                        updateModule(updatedModule)
+                    }
+                    onCancelClicked={() => setShowUpdateModuleModalState(false)}
+                    showLoading={showButtonLoadingState}
+                />
             </React.Fragment>
         );
     };

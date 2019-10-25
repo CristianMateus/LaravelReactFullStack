@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 
 // Servicios
 import { getAllRoles } from "../../shared/services/RoleServices";
+import EditRoleForm from "./components/editRoleForm/EditRoleForm";
 
 const Roles = () => {
     useEffect(() => {
@@ -45,13 +46,13 @@ const Roles = () => {
                     <i
                         className="far fa-trash-alt"
                         onClick={() => onDeleteClicked(record)}
-                        style={{cursor: 'pointer'}}
+                        style={{ cursor: "pointer" }}
                     />
                     <Divider type="vertical" />
                     <i
                         className="fas fa-pen"
                         onClick={() => onUpdateClicked(record)}
-                        style={{cursor: 'pointer'}}
+                        style={{ cursor: "pointer" }}
                     />
                 </span>
             )
@@ -64,36 +65,45 @@ const Roles = () => {
         });
     };
 
-    const addRole = async () => {
+    const addRole = async updatedRole => {
         setShowButtonLoadingState(true);
         setTimeout(() => {
+            console.log("addRole", updatedRole);
             setShowButtonLoadingState(false);
             setShowAddRoleModalState(false);
         }, 2000);
     };
 
+    const updateRole = async updatedRole => {
+        setShowButtonLoadingState(true);
+        setTimeout(() => {
+            console.log("updateRole", updatedRole);
+            setShowButtonLoadingState(false);
+            setShowUpdateRoleModalState(false);
+        }, 2000);
+    };
+
     const onDeleteClicked = item => {
-        setSelectedItemState(item)
+        setSelectedItemState(item);
         setShowDeleteRoleModalState(true);
     };
 
     const onUpdateClicked = item => {
-        setSelectedItemState(item)
+        setSelectedItemState(item);
         setShowUpdateRoleModalState(true);
     };
 
     const pageModals = () => {
         return (
             <React.Fragment>
-                <Modal
-                    title="Añadir rol"
-                    visible={showAddRoleModalState}
-                    onOk={() => addRole()}
-                    confirmLoading={showButtonLoadingState}
-                    onCancel={() => setShowAddRoleModalState(false)}
-                >
-                    <p>Formulario</p>
-                </Modal>
+                {/* Añadir rol */}
+                <EditRoleForm
+                    showModal={showAddRoleModalState}
+                    onSaveClicked={updatedRole => addRole(updatedRole)}
+                    onCancelClicked={() => setShowAddRoleModalState(false)}
+                    showLoading={showButtonLoadingState}
+                />
+                {/* Eliminar rol */}
                 <Modal
                     title={`Eliminar rol ${
                         selectedItemState ? selectedItemState.name : null
@@ -105,17 +115,14 @@ const Roles = () => {
                 >
                     <p>Esta seguro de querer eliminar este rol?</p>
                 </Modal>
-                <Modal
-                    title={`Actualizar rol ${
-                        selectedItemState ? selectedItemState.name : null
-                    }`}
-                    visible={showUpdateRoleModalState}
-                    onOk={() => addRole()}
-                    confirmLoading={showButtonLoadingState}
-                    onCancel={() => setShowUpdateRoleModalState(false)}
-                >
-                    <h1>Actualizar</h1>
-                </Modal>
+                {/* Editar rol */}
+                <EditRoleForm
+                    role={selectedItemState}
+                    showModal={showUpdateRoleModalState}
+                    onSaveClicked={updatedRole => updateRole(updatedRole)}
+                    onCancelClicked={() => setShowUpdateRoleModalState(false)}
+                    showLoading={showButtonLoadingState}
+                />
             </React.Fragment>
         );
     };
