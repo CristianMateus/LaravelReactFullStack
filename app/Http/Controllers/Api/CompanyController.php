@@ -39,7 +39,7 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $company = Company::create($request->all());
- 
+
         return response()->json($company, 201);
     }
 
@@ -75,25 +75,21 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         $company->update($request->all());
- 
+
         return response()->json($company, 200);
     }
 
-    public function delete(Company $company)
-    {
-        $company->delete();
- 
-        return response()->json(null, 204);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $company = Company::find($id);
+
+        if($company){
+            $company->delete();
+            return response('Compñia eliminada', 200)
+            ->header('Content-Type', 'text/plain');
+        }else{
+            return response('Compañia no encontrada', 400)
+            ->header('Content-Type', 'text/plain');
+        }
     }
 }

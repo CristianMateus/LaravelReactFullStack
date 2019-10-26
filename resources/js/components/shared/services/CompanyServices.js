@@ -10,11 +10,11 @@ export const getAllCompanies = async () => {
 };
 
 
-export const deleteCompany = async (company) => {
+export const deleteCompany = async (companyId) => {
     return await axios
-        .delete("/api/company", company)
+        .delete(`/api/company/${companyId}`)
         .then(response => {
-            return response.data;
+            return   response.data;
         })
         .catch(error => console.error(error));
 };

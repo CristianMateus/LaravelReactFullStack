@@ -31,29 +31,9 @@ Route::resource('module', 'Api\ModuleController');
 **Route::delete($uri, $callback);
 **
 */
- 
- 
-Route::post('company','CompanyController@store');
- 
-Route::put('company/{company}','CompanyController@update');
- 
-Route::delete('company/{company}', 'CompanyController@delete');
 
-// // Post
-// Route::post('company', function (Request $request) {
-//     $resp = Product::create($request->all());
-//     return $resp;
-// });
-
-// // Put
-// Route::put('company/{company}', function (Request $request, $companyId) {
-//     $company = Product::findOrFail($companyId);
-//     $company->update($request->all());
-//     return $company;
-// });
-
-// // Delete
-// Route::delete('company/{company}', function ($companyId) {
-//     Product::find($companyId)->delete();
-//     return 204;
-// });
+// Route::post('company','Api\CompanyController@store');
+ 
+// Route::put('company/{company}','Api\CompanyController@update');
+ 
+// Route::delete('company/{id}', 'CompanyController@delete');

@@ -95,23 +95,12 @@ const Company = () => {
         }, 2000);
     };
 
-    const deleteCompany = async () => {
-        setShowButtonLoadingState(true);
-        await deleteCompany(selectedItemState)
+    const deleteCompanyHandler = async () => {
+        await deleteCompany(selectedItemState.id)
             .then(response => {
-                setShowButtonLoadingState(false);
-                setshowDeleteCompanyModalState(false);
-                getAllCompanies();
-                console.log(response.data);
+                console.log(response);
             })
-            .catch(error => {
-                console.error(error);
-            });
-        // setTimeout(() => {
-        //     console.log('eliminar compañía', selectedItemState)
-        //     setShowButtonLoadingState(false);
-        //     setshowDeleteCompanyModalState(false);
-        // }, 2000);
+            .catch(error => console.error(error));
     };
 
     const onDeleteClicked = item => {
@@ -140,7 +129,7 @@ const Company = () => {
                         selectedItemState ? selectedItemState.name : null
                     }`}
                     visible={showDeleteCompanyModalState}
-                    onOk={() => deleteCompany()}
+                    onOk={() => deleteCompanyHandler()}
                     confirmLoading={showButtonLoadingState}
                     onCancel={() => setshowDeleteCompanyModalState(false)}
                 >
