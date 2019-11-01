@@ -39,7 +39,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Role::create($request->all());
     }
 
     /**
@@ -71,9 +71,11 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        $role->update($request->all());
+
+        return response()->json($role, 200);
     }
 
     /**
@@ -84,6 +86,17 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        {
+            $role = Role::find($id);
+    
+            if($role){
+                $role->delete();
+                return response('Rol eliminado', 200)
+                ->header('Content-Type', 'text/plain');
+            }else{
+                return response('Rol no encontrado', 400)
+                ->header('Content-Type', 'text/plain');
+            }
+        }
     }
 }

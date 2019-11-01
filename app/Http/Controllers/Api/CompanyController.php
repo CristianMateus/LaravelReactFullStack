@@ -85,7 +85,7 @@ class CompanyController extends Controller
 
         if($company){
             $company->delete();
-            return response('Compñia eliminada', 200)
+            return response('Compañia eliminada', 200)
             ->header('Content-Type', 'text/plain');
         }else{
             return response('Compañia no encontrada', 400)

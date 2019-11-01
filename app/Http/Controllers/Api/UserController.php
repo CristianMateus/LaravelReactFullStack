@@ -39,7 +39,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return User::create($request->all());
     }
 
     /**
@@ -71,9 +71,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $user->update($request->all());
+
+        return response()->json($user, 200);
     }
 
     /**
@@ -84,6 +86,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+
+        if($user){
+            $user->delete();
+            return response('Compañia eliminada', 200)
+            ->header('Content-Type', 'text/plain');
+        }else{
+            return response('Compañia no encontrada', 400)
+            ->header('Content-Type', 'text/plain');
+        }
     }
 }
