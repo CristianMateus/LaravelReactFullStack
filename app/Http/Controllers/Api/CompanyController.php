@@ -25,9 +25,9 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($request)
     {
-        //
+        return Company::create($request->all());
     }
 
     /**
@@ -38,9 +38,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $company = Company::create($request->all());
-
-        return response()->json($company, 201);
+        return Company::create($request->all());
     }
 
     /**
@@ -62,7 +60,9 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $company = Company::find($id);
+        return response('Put funciona', 400)
+        ->header('Content-Type', 'text/plain');
     }
 
     /**
@@ -85,7 +85,7 @@ class CompanyController extends Controller
 
         if($company){
             $company->delete();
-            return response('Compñia eliminada', 200)
+            return response('Compañia eliminada', 200)
             ->header('Content-Type', 'text/plain');
         }else{
             return response('Compañia no encontrada', 400)

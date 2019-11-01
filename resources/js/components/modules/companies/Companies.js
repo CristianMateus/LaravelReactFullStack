@@ -11,6 +11,8 @@ import React, { useEffect, useState } from "react";
 // Servicios
 import {
     getAllCompanies,
+    saveCompany,
+    updateCompany as updateCompanyService,
     deleteCompany
 } from "../../shared/services/CompanyServices";
 
@@ -51,6 +53,11 @@ const Company = () => {
             key: "nit"
         },
         {
+            title: "Dirección",
+            dataIndex: "address",
+            key: "address"
+        },
+        {
             title: "Acciones",
             key: "action",
             render: record => (
@@ -79,26 +86,40 @@ const Company = () => {
 
     const addCompany = async updatedCompany => {
         setShowButtonLoadingState(true);
-        console.log("nueva compañía", updatedCompany);
-        setTimeout(() => {
-            setShowButtonLoadingState(false);
-            setshowAddCompanyModalState(false);
-        }, 2000);
+        await saveCompany(updatedCompany)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                alert("Compañía añadida!");
+                setshowAddCompanyModalState(false);
+                getCompanies();
+            })
+            .catch(error => {
+                console.error(error);
+                setShowButtonLoadingState(false);
+            });
     };
 
     const updateCompany = async updatedCompany => {
         setShowButtonLoadingState(true);
-        console.log("actualizarcompañía", updatedCompany);
-        setTimeout(() => {
-            setShowButtonLoadingState(false);
-            setshowUpdateCompanyModalState(false);
-        }, 2000);
+        await updateCompanyService(selectedItemState.id, updatedCompany)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                alert('Compañía Actualizada!')
+                setshowUpdateCompanyModalState(false)
+                getCompanies()
+            })
+            .catch(error => {
+                setShowButtonLoadingState(false);
+                console.error(error);
+            });
     };
 
     const deleteCompanyHandler = async () => {
         await deleteCompany(selectedItemState.id)
             .then(response => {
-                console.log(response);
+                setshowDeleteCompanyModalState(false);
+                getCompanies();
+                alert(response);
             })
             .catch(error => console.error(error));
     };

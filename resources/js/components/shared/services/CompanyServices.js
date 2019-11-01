@@ -9,12 +9,25 @@ export const getAllCompanies = async () => {
         .catch(error => console.error(error));
 };
 
-
-export const deleteCompany = async (companyId) => {
+export const deleteCompany = async companyId => {
     return await axios
         .delete(`/api/company/${companyId}`)
         .then(response => {
-            return   response.data;
+            return response.data;
         })
+        .catch(error => console.error(error));
+};
+
+export const saveCompany = async newCompany => {
+    return await axios
+        .post("/api/company", newCompany)
+        .then(response => response.data)
+        .catch(error => console.error(error));
+};
+
+export const updateCompany = async (updatedCompanyId, updatedCompany) => {
+    return await axios
+        .put(`/api/company/${updatedCompanyId}`, updatedCompany)
+        .then(response => response.data)
         .catch(error => console.error(error));
 };
