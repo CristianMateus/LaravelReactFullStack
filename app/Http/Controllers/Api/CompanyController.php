@@ -25,9 +25,9 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($request)
     {
-        //
+        return Company::create($request->all());
     }
 
     /**
@@ -38,9 +38,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $company = Company::create($request->all());
-
-        return response()->json($company, 201);
+        return Company::create($request->all());
     }
 
     /**

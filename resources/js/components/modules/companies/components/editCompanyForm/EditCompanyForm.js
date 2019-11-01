@@ -60,6 +60,14 @@ const EditCompanyForm = ({
                         onChange={e => handleInputChanged(e)}
                     />
                 </Form.Item>
+                <Form.Item label="Dirección">
+                    <Input
+                        name="address"
+                        required
+                        value={companyState.address}
+                        onChange={e => handleInputChanged(e)}
+                    />
+                </Form.Item>
             </Form>
         </Modal>
     );

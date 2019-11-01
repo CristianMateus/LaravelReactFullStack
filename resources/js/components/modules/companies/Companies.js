@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 // Servicios
 import {
     getAllCompanies,
+    saveCompany,
     deleteCompany
 } from "../../shared/services/CompanyServices";
 
@@ -51,6 +52,11 @@ const Company = () => {
             key: "nit"
         },
         {
+            title: "Dirección",
+            dataIndex: "address",
+            key: "address"
+        },
+        {
             title: "Acciones",
             key: "action",
             render: record => (
@@ -79,11 +85,15 @@ const Company = () => {
 
     const addCompany = async updatedCompany => {
         setShowButtonLoadingState(true);
-        console.log("nueva compañía", updatedCompany);
-        setTimeout(() => {
+        await saveCompany(updatedCompany).then(response => {
+            setShowButtonLoadingState(false)
+            alert('Compañía añadida!')
+            setshowAddCompanyModalState(false)
+            getCompanies()
+        }).catch(error => {
+            console.error(error)
             setShowButtonLoadingState(false);
-            setshowAddCompanyModalState(false);
-        }, 2000);
+        })
     };
 
     const updateCompany = async updatedCompany => {
@@ -98,7 +108,9 @@ const Company = () => {
     const deleteCompanyHandler = async () => {
         await deleteCompany(selectedItemState.id)
             .then(response => {
-                console.log(response);
+                setshowDeleteCompanyModalState(false)
+                getCompanies()
+                alert(response)
             })
             .catch(error => console.error(error));
     };
