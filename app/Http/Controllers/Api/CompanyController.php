@@ -60,7 +60,9 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $company = Company::find($id);
+        return response('Put funciona', 400)
+        ->header('Content-Type', 'text/plain');
     }
 
     /**

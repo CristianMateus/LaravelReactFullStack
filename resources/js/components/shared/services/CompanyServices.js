@@ -24,3 +24,10 @@ export const saveCompany = async newCompany => {
         .then(response => response.data)
         .catch(error => console.error(error));
 };
+
+export const updateCompany = async (updatedCompanyId, updatedCompany) => {
+    return await axios
+        .put(`/api/company/${updatedCompanyId}`, updatedCompany)
+        .then(response => response.data)
+        .catch(error => console.error(error));
+};

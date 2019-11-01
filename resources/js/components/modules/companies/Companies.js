@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import {
     getAllCompanies,
     saveCompany,
+    updateCompany as updateCompanyService,
     deleteCompany
 } from "../../shared/services/CompanyServices";
 
@@ -85,32 +86,40 @@ const Company = () => {
 
     const addCompany = async updatedCompany => {
         setShowButtonLoadingState(true);
-        await saveCompany(updatedCompany).then(response => {
-            setShowButtonLoadingState(false)
-            alert('Compañía añadida!')
-            setshowAddCompanyModalState(false)
-            getCompanies()
-        }).catch(error => {
-            console.error(error)
-            setShowButtonLoadingState(false);
-        })
+        await saveCompany(updatedCompany)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                alert("Compañía añadida!");
+                setshowAddCompanyModalState(false);
+                getCompanies();
+            })
+            .catch(error => {
+                console.error(error);
+                setShowButtonLoadingState(false);
+            });
     };
 
     const updateCompany = async updatedCompany => {
         setShowButtonLoadingState(true);
-        console.log("actualizarcompañía", updatedCompany);
-        setTimeout(() => {
-            setShowButtonLoadingState(false);
-            setshowUpdateCompanyModalState(false);
-        }, 2000);
+        await updateCompanyService(selectedItemState.id, updatedCompany)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                alert('Compañía Actualizada!')
+                setshowUpdateCompanyModalState(false)
+                getCompanies()
+            })
+            .catch(error => {
+                setShowButtonLoadingState(false);
+                console.error(error);
+            });
     };
 
     const deleteCompanyHandler = async () => {
         await deleteCompany(selectedItemState.id)
             .then(response => {
-                setshowDeleteCompanyModalState(false)
-                getCompanies()
-                alert(response)
+                setshowDeleteCompanyModalState(false);
+                getCompanies();
+                alert(response);
             })
             .catch(error => console.error(error));
     };
