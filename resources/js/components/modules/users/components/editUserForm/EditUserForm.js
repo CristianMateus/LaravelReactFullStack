@@ -37,16 +37,22 @@ const EditUserForm = ({
                 user ? `Actualizar compañía ${user.name}` : "Añadir compañía"
             }
             visible={showModal}
-            onOk={() => onSaveClicked(userState)}
+            onOk={() => {
+                setUserState({
+                    name: null,
+                    email: null,
+                    personalId: null,
+                    phone: null
+                });
+                onSaveClicked(userState);
+            }}
             onCancel={() => {
-                user
-                    ? setUserState({
-                          name: user.name,
-                          email: user.email,
-                          personalId: user.personalId,
-                          phone: user.phone
-                      })
-                    : null;
+                setUserState({
+                    name: null,
+                    email: null,
+                    personalId: null,
+                    phone: null
+                });
                 onCancelClicked();
             }}
             confirmLoading={showLoading}

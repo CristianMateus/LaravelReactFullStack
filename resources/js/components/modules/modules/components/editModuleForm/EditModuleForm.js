@@ -36,9 +36,7 @@ const EditModuleForm = ({
             visible={showModal}
             onOk={() => onSaveClicked(moduleState)}
             onCancel={() => {
-                moduleToUpdate
-                    ? setModuleState({ name: moduleToUpdate.name, route: moduleToUpdate.route })
-                    : null;
+                setModuleState({ name: null, route: null });
                 onCancelClicked();
             }}
             confirmLoading={showLoading}

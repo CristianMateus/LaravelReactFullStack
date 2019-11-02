@@ -36,9 +36,7 @@ const EditCompanyForm = ({
             visible={showModal}
             onOk={() => onSaveClicked(companyState)}
             onCancel={() => {
-                company
-                    ? setCompanyState({ name: company.name, nit: company.nit })
-                    : null;
+                setCompanyState({ name: null, nit: null });
                 onCancelClicked();
             }}
             confirmLoading={showLoading}

@@ -28,17 +28,11 @@ const EditRoleForm = ({
 
     return (
         <Modal
-            title={
-                role
-                    ? `Actualizar rol ${role.name}`
-                    : "Añadir rol"
-            }
+            title={role ? `Actualizar rol ${role.name}` : "Añadir rol"}
             visible={showModal}
             onOk={() => onSaveClicked(roleState)}
             onCancel={() => {
-                role
-                    ? setRoleState({ name: role.name })
-                    : null;
+                setRoleState({ name: null });
                 onCancelClicked();
             }}
             confirmLoading={showLoading}
