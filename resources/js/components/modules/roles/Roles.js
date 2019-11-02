@@ -8,7 +8,12 @@ import { Table, Divider, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 
 // Servicios
-import { getAllRoles } from "../../shared/services/RoleServices";
+import {
+    getAllRoles,
+    saveRole,
+    updateRole as updateRoleService,
+    deleteRole as deleteRoleService
+} from "../../shared/services/RoleServices";
 import EditRoleForm from "./components/editRoleForm/EditRoleForm";
 
 const Roles = () => {
@@ -67,29 +72,38 @@ const Roles = () => {
 
     const addRole = async updatedRole => {
         setShowButtonLoadingState(true);
-        setTimeout(() => {
-            console.log("addRole", updatedRole);
+        await saveRole(updatedRole).then(response => {
             setShowButtonLoadingState(false);
             setShowAddRoleModalState(false);
-        }, 2000);
+            getRoles()
+        }).catch(error => {
+            setShowButtonLoadingState(false);
+            console.error(error)
+        })
     };
 
     const updateRole = async updatedRole => {
         setShowButtonLoadingState(true);
-        setTimeout(() => {
-            console.log("updateRole", updatedRole);
+        await updateRoleService(selectedItemState.id, updatedRole).then(response => {
             setShowButtonLoadingState(false);
             setShowUpdateRoleModalState(false);
-        }, 2000);
+            getRoles()
+        }).catch(error => {
+            setShowButtonLoadingState(false);
+            console.error(error)
+        })
     };
 
     const deleteRole = async () => {
         setShowButtonLoadingState(true);
-        setTimeout(() => {
-            console.log('eliminar rol', selectedItemState)
+        await deleteRoleService(selectedItemState.id).then(response => {
             setShowButtonLoadingState(false);
             setShowDeleteRoleModalState(false);
-        }, 2000);
+            getRoles()
+        }).catch(error => {
+            setShowButtonLoadingState(false);
+            console.error(error)
+        })
     };
 
     const onDeleteClicked = item => {
