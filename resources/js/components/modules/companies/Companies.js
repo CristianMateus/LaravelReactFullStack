@@ -89,7 +89,6 @@ const Company = () => {
         await saveCompany(updatedCompany)
             .then(response => {
                 setShowButtonLoadingState(false);
-                alert("Compañía añadida!");
                 setshowAddCompanyModalState(false);
                 getCompanies();
             })
@@ -104,7 +103,6 @@ const Company = () => {
         await updateCompanyService(selectedItemState.id, updatedCompany)
             .then(response => {
                 setShowButtonLoadingState(false);
-                alert('Compañía Actualizada!')
                 setshowUpdateCompanyModalState(false)
                 getCompanies()
             })
@@ -119,7 +117,6 @@ const Company = () => {
             .then(response => {
                 setshowDeleteCompanyModalState(false);
                 getCompanies();
-                alert(response);
             })
             .catch(error => console.error(error));
     };

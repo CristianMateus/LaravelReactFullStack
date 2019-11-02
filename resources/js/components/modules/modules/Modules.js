@@ -8,7 +8,12 @@ import { Table, Divider, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 
 // Servicios
-import { getAllModules } from "../../shared/services/ModuleServices";
+import {
+    getAllModules,
+    saveModule,
+    updateModule as updateModuleService,
+    deleteModule as deleteModuleService
+} from "../../shared/services/ModuleServices";
 import EditModuleForm from "./components/editModuleForm/EditModuleForm";
 
 const Modules = () => {
@@ -73,31 +78,47 @@ const Modules = () => {
         }
     ];
 
-    const addModule = async (updatedModule) => {
+    const addModule = async updatedModule => {
         setShowButtonLoadingState(true);
-        console.log('addModule', updatedModule)
-        setTimeout(() => {
-            setShowButtonLoadingState(false);
-            setShowAddModuleModalState(false);
-        }, 2000);
+
+        await saveModule(updatedModule)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                setShowAddModuleModalState(false);
+                getModules();
+            })
+            .catch(error => {
+                setShowButtonLoadingState(false);
+                console.error(error);
+            });
     };
 
-    const updateModule = async (updatedModule) => {
+    const updateModule = async updatedModule => {
         setShowButtonLoadingState(true);
-        console.log('updateModule', updatedModule)
-        setTimeout(() => {
-            setShowButtonLoadingState(false);
-            setShowUpdateModuleModalState(false);
-        }, 2000);
+        await updateModuleService(selectedItemState.id, updatedModule)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                setShowUpdateModuleModalState(false);
+                getModules();
+            })
+            .catch(error => {
+                setShowButtonLoadingState(false);
+                console.error(error);
+            });
     };
-    
+
     const deleteModule = async () => {
         setShowButtonLoadingState(true);
-        setTimeout(() => {
-            console.log('eliminar modulo', selectedItemState)
-            setShowButtonLoadingState(false);
-            setShowDeleteModuleModalState(false);
-        }, 2000);
+        await deleteModuleService(selectedItemState.id)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                setShowDeleteModuleModalState(false);
+                getModules();
+            })
+            .catch(error => {
+                setShowButtonLoadingState(false);
+                console.error(error);
+            });
     };
 
     const onDeleteClicked = item => {
@@ -136,9 +157,7 @@ const Modules = () => {
                 <EditModuleForm
                     moduleToUpdate={selectedItemState}
                     showModal={showUpdateModuleModalState}
-                    onSaveClicked={updatedModule =>
-                        updateModule(updatedModule)
-                    }
+                    onSaveClicked={updatedModule => updateModule(updatedModule)}
                     onCancelClicked={() => setShowUpdateModuleModalState(false)}
                     showLoading={showButtonLoadingState}
                 />

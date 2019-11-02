@@ -71,7 +71,7 @@ class ModuleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $module)
+    public function update(Request $request, Module $module)
     {
         $module->update($request->all());
 
@@ -90,10 +90,10 @@ class ModuleController extends Controller
 
         if($module){
             $module->delete();
-            return response('Compañia eliminada', 200)
+            return response('Modulo eliminado', 200)
             ->header('Content-Type', 'text/plain');
         }else{
-            return response('Compañia no encontrada', 400)
+            return response('Modulo no encontrado', 400)
             ->header('Content-Type', 'text/plain');
         }
     }
