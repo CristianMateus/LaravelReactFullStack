@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->integer('personalId')->nullable(false)->unique()->unsigned();
             $table->string('name')->nullable(false);
-            $table->date('date');
+            $table->date('date')->nullable(true);
             $table->string('email');
             $table->integer('phone');
             $table->timestamps();

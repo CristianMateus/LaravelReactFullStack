@@ -8,7 +8,12 @@ import { Table, Divider, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 
 // Servicios
-import { getAllUsers } from "../../shared/services/UserServices";
+import {
+    getAllUsers,
+    saveUser,
+    deleteUser as deleteUserService,
+    updateUser as updatedUserService
+} from "../../shared/services/UserServices";
 import EditUserForm from "./components/editUserForm/EditUserForm";
 
 const Users = () => {
@@ -61,13 +66,13 @@ const Users = () => {
                     <i
                         className="far fa-trash-alt"
                         onClick={() => onDeleteClicked(record)}
-                        style={{cursor: 'pointer'}}
+                        style={{ cursor: "pointer" }}
                     />
                     <Divider type="vertical" />
                     <i
                         className="fas fa-pen"
                         onClick={() => onUpdateClicked(record)}
-                        style={{cursor: 'pointer'}}
+                        style={{ cursor: "pointer" }}
                     />
                 </span>
             )
@@ -80,40 +85,52 @@ const Users = () => {
         });
     };
 
-    const addUser = async (updatedUser) => {
+    const addUser = async updatedUser => {
         setShowButtonLoadingState(true);
-        setTimeout(() => {
-            console.log('addUser', updatedUser)
+        await saveUser({...updatedUser, date: null}).then(response => {
             setShowButtonLoadingState(false);
             setShowAddUserModalState(false);
-        }, 2000);
+            getUsers()
+        }).catch(error => {
+            setShowButtonLoadingState(false);
+            console.error(error)
+        })
     };
 
-    const updateUser = async (updatedUser) => {
+    const updateUser = async updatedUser => {
         setShowButtonLoadingState(true);
-        setTimeout(() => {
-            console.log('updateUser', updatedUser)
-            setShowButtonLoadingState(false);
-            setShowUpdateUserModalState(false);
-        }, 2000);
+
+        await updatedUserService(selectedItemState.id, {...updatedUser, date: null})
+            .then(response => {
+                setShowButtonLoadingState(false);
+                setShowUpdateUserModalState(false);
+                getUsers();
+            })
+            .catch(error => {
+                console.error(error);
+                setShowButtonLoadingState(false);
+            });
     };
 
     const deleteUser = async () => {
         setShowButtonLoadingState(true);
-        setTimeout(() => {
-            console.log('eliminar usuario', selectedItemState)
+        await deleteUserService(selectedItemState.id).then(response => {
             setShowButtonLoadingState(false);
             setShowDeleteUserModalState(false);
-        }, 2000);
+            getUsers()
+        }).catch(error => {
+            console.error(error)
+            setShowButtonLoadingState(false);
+        })
     };
 
     const onDeleteClicked = item => {
-        setSelectedItemState(item)
+        setSelectedItemState(item);
         setShowDeleteUserModalState(true);
     };
 
     const onUpdateClicked = item => {
-        setSelectedItemState(item)
+        setSelectedItemState(item);
         setShowUpdateUserModalState(true);
     };
 
@@ -143,12 +160,8 @@ const Users = () => {
                 <EditUserForm
                     user={selectedItemState}
                     showModal={showUpdateUserModalState}
-                    onSaveClicked={updatedUser =>
-                        updateUser(updatedUser)
-                    }
-                    onCancelClicked={() =>
-                        setShowUpdateUserModalState(false)
-                    }
+                    onSaveClicked={updatedUser => updateUser(updatedUser)}
+                    onCancelClicked={() => setShowUpdateUserModalState(false)}
                     showLoading={showButtonLoadingState}
                 />
             </React.Fragment>
