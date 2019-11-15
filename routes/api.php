@@ -34,6 +34,6 @@ Route::post('addUserCompany/{userId}/{companyId}', 'Api\UserController@addUserCo
 Route::delete('deleteUserCompany/{userId}/{companyId}', 'Api\UserController@deleteUserCompany');
 
 // Roles por modulo
-Route::get('moduleRoles/{id}', 'Api\UserController@moduleRoles');
-Route::post('addModuleRole/{moduleId}/{roleId}', 'Api\UserController@addModuleRole');
-Route::delete('deleteModuleRole/{moduleId}/{roleId}', 'Api\UserController@deleteModuleRole');
+Route::get('moduleRoles/{id}', 'Api\ModuleController@moduleRoles');
+Route::post('addModuleRole/{moduleId}/{roleId}', 'Api\ModuleController@addModuleRole');
+Route::delete('deleteModuleRole/{moduleId}/{roleId}', 'Api\ModuleController@deleteModuleRole');

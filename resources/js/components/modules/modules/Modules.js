@@ -1,5 +1,7 @@
 // Componentes Propios
 import ComponentContainer from "../../shared/components/componentContainer/ComponentContainer";
+import EditModuleForm from "./components/editModuleForm/EditModuleForm";
+import AssociateRoles from "./components/associateRoles/AssociateRoles";
 
 // Ant Design
 import { Table, Divider, Modal } from "antd";
@@ -14,17 +16,23 @@ import {
     updateModule as updateModuleService,
     deleteModule as deleteModuleService
 } from "../../shared/services/ModuleServices";
-import EditModuleForm from "./components/editModuleForm/EditModuleForm";
+import { getAllRoles } from "../../shared/services/RoleServices";
 
 const Modules = () => {
     useEffect(() => {
         getModules();
+        getRoles();
     }, []);
 
     const [allModulesState, setAllModulesState] = useState([]);
+    const [allRolesState, setAllRolesState] = useState([]);
     const [showAddModuleModalState, setShowAddModuleModalState] = useState(
         false
     );
+    const [
+        showAssociateRoleModalState,
+        setShowAssociateRoleModalState
+    ] = useState(false);
     const [
         showUpdateModuleModalState,
         setShowUpdateModuleModalState
@@ -41,6 +49,19 @@ const Modules = () => {
             setAllModulesState(response);
         });
     };
+    
+    const getRoles = async () => {
+        await getAllRoles().then(response => {
+            setAllRolesState(response);
+        });
+    };
+
+
+    const onAssociateRoleClicked = item => {
+        setSelectedItemState(item);
+        setShowAssociateRoleModalState(true);
+    };
+
     const columns = [
         {
             title: "Id",
@@ -71,6 +92,12 @@ const Modules = () => {
                     <i
                         className="fas fa-pen"
                         onClick={() => onUpdateClicked(record)}
+                        style={{ cursor: "pointer" }}
+                    />
+                    <Divider type="vertical" />
+                    <i
+                        className="far fa-address-card"
+                        onClick={() => onAssociateRoleClicked(record)}
                         style={{ cursor: "pointer" }}
                     />
                 </span>
@@ -160,6 +187,16 @@ const Modules = () => {
                     onSaveClicked={updatedModule => updateModule(updatedModule)}
                     onCancelClicked={() => setShowUpdateModuleModalState(false)}
                     showLoading={showButtonLoadingState}
+                />
+                {/* Asociar Roles */}
+                <AssociateRoles
+                    allRoles={allRolesState}
+                    showModal={showAssociateRoleModalState}
+                    onCancelClicked={() =>
+                        setShowAssociateRoleModalState(false)
+                    }
+                    onOkClicked={() => setShowAssociateRoleModalState(false)}
+                    module={selectedItemState}
                 />
             </React.Fragment>
         );

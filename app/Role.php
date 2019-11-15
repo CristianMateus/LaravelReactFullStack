@@ -23,6 +23,6 @@ class Role extends Model
      */
     public function modules()
     {
-        return $this->belongsToMany('App\Module', 'role_module', 'role_id', 'module_id')->withTimestamps();
+        return $this->belongsToMany('App\Role', 'role_module', 'role_id', 'module_id')->withTimestamps();
     }
 }
