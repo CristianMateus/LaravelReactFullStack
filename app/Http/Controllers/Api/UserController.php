@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\User;
 use App\Role;
+use App\Company;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -138,6 +139,50 @@ class UserController extends Controller
         $user->roles()->detach($role);
 
         return response('Rol eliminado', 200)
+            ->header('Content-Type', 'text/plain');
+    }
+
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function userCompanies($id)
+    {
+        //
+        $user = User::find($id);
+        $userCompanies = $user->companies;
+
+        return response()->json($userCompanies);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function addUserCompany($userId, $companyId)
+    {
+        $user = User::find($userId);
+        $user->companies()->attach($companyId);
+        return response('Compañía añadida', 200)
+            ->header('Content-Type', 'text/plain');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteUserCompany($userId, $companyId)
+    {
+        $user = User::find($userId);
+        $company = Company::find($companyId);
+        $user->companies()->detach($company);
+
+        return response('Compañía eliminada', 200)
             ->header('Content-Type', 'text/plain');
     }
 }

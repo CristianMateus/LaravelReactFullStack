@@ -52,3 +52,24 @@ export const deleteUserRole = async (userId, roleId) => {
         .then(response => response.data)
         .catch(error => console.error(error));
 };
+
+export const getUserCompanies = async userId => {
+    return await axios
+        .get(`/api/userCompanies/${userId}`)
+        .then(response => response.data)
+        .catch(error => console.error(error));
+};
+
+export const addUserCompany = async (userId, companyId) => {
+    return await axios
+        .post(`/api/addUserCompany/${userId}/${companyId}`)
+        .then(response => response.data)
+        .catch(error => console.error(error));
+};
+
+export const deleteUserCompany = async (userId, companyId) => {
+    return await axios
+        .delete(`/api/deleteUserCompany/${userId}/${companyId}`)
+        .then(response => response.data)
+        .catch(error => console.error(error));
+};

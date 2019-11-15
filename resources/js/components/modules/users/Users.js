@@ -2,6 +2,7 @@
 import ComponentContainer from "../../shared/components/componentContainer/ComponentContainer";
 import EditUserForm from "./components/editUserForm/EditUserForm";
 import AssociateRoles from "./components/associateRoles/AssociateRoles";
+import AssociateCompanies from "./components/associateCompanies/AssociateCompanies";
 
 // Ant Design
 import { Table, Divider, Modal } from "antd";
@@ -17,15 +18,18 @@ import {
     updateUser as updatedUserService
 } from "../../shared/services/UserServices";
 import { getAllRoles } from "../../shared/services/RoleServices";
+import { getAllCompanies } from "../../shared/services/CompanyServices";
 
 const Users = () => {
     useEffect(() => {
         getUsers();
         getRoles();
+        getCompanies();
     }, []);
 
     const [allUsersState, setAllUsersState] = useState([]);
     const [allRolesState, setAllRolesState] = useState([]);
+    const [allCompaniesState, setAllCompaniesState] = useState([]);
     const [showAddUserModalState, setShowAddUserModalState] = useState(false);
     const [showUpdateUserModalState, setShowUpdateUserModalState] = useState(
         false
@@ -33,6 +37,10 @@ const Users = () => {
     const [
         showAssociateRoleModalState,
         setShowAssociateRoleModalState
+    ] = useState(false);
+    const [
+        showAssociateCompaniesModalState,
+        setShowAssociateCompaniesModalState
     ] = useState(false);
     const [showDeleteUserModalState, setShowDeleteUserModalState] = useState(
         false
@@ -88,6 +96,12 @@ const Users = () => {
                         onClick={() => onAssociateRoleClicked(record)}
                         style={{ cursor: "pointer" }}
                     />
+                    <Divider type="vertical" />
+                    <i
+                        className="far fa-building"
+                        onClick={() => onAssociateCompanyClicked(record)}
+                        style={{ cursor: "pointer" }}
+                    />
                 </span>
             )
         }
@@ -102,6 +116,12 @@ const Users = () => {
     const getRoles = async () => {
         await getAllRoles().then(response => {
             setAllRolesState(response);
+        });
+    };
+
+    const getCompanies = async () => {
+        await getAllCompanies().then(response => {
+            setAllCompaniesState(response);
         });
     };
 
@@ -166,6 +186,11 @@ const Users = () => {
         setShowAssociateRoleModalState(true);
     };
 
+    const onAssociateCompanyClicked = item => {
+        setSelectedItemState(item);
+        setShowAssociateCompaniesModalState(true);
+    };
+
     const pageModals = () => {
         return (
             <React.Fragment>
@@ -204,6 +229,16 @@ const Users = () => {
                         setShowAssociateRoleModalState(false)
                     }
                     onOkClicked={() => setShowAssociateRoleModalState(false)}
+                    user={selectedItemState}
+                />
+                {/* Asociar Compañías */}
+                <AssociateCompanies
+                    allCompanies={allCompaniesState}
+                    showModal={showAssociateCompaniesModalState}
+                    onCancelClicked={() =>
+                        setShowAssociateCompaniesModalState(false)
+                    }
+                    onOkClicked={() => setShowAssociateCompaniesModalState(false)}
                     user={selectedItemState}
                 />
             </React.Fragment>

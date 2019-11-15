@@ -15,4 +15,11 @@ class User extends Model
     {
         return $this->belongsToMany('App\Role', 'user_role', 'user_id', 'role_id')->withTimestamps();
     }
+    /**
+     * The companies that belong to the user.
+     */
+    public function companies()
+    {
+        return $this->belongsToMany('App\Company', 'company_user', 'user_id', 'company_id')->withTimestamps();
+    }
 }
