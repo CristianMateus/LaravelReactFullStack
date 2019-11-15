@@ -10,6 +10,7 @@ import {
     addUserRole,
     deleteUserRole
 } from "../../../../shared/services/UserServices";
+import ModalSpinner from "../../../../shared/components/modalSpinner/ModalSpinner";
 
 // Many to many websites
 // https://appdividend.com/2018/05/17/laravel-many-to-many-relationship-example/
@@ -30,10 +31,7 @@ const AssociateRoles = ({
         if (showModal) {
             getUserRoles();
         } else {
-            const deselectedRoles = allRoles.map(role => {
-                return { ...role, selected: false };
-            });
-            setSelectedRolesState(deselectedRoles)
+            setSelectedRolesState([]);
         }
     }, [showModal]);
 
@@ -85,11 +83,11 @@ const AssociateRoles = ({
             footer={null}
             destroyOnClose={true}
         >
-            <CardLayout>
-                {selectedRolesState.length === 0 ? (
-                    <p>No existen roles</p>
-                ) : (
-                    selectedRolesState.map((role, i) => (
+            {selectedRolesState.length === 0 ? (
+                <ModalSpinner />
+            ) : (
+                <CardLayout>
+                    {selectedRolesState.map((role, i) => (
                         <Card
                             key={i}
                             onCardCliked={isSelected =>
@@ -98,9 +96,9 @@ const AssociateRoles = ({
                             title={role.name}
                             isSelected={role.selected}
                         />
-                    ))
-                )}
-            </CardLayout>
+                    ))}
+                </CardLayout>
+            )}
         </Modal>
     );
 };
