@@ -1,5 +1,7 @@
 // Componentes Propios
 import ComponentContainer from "../../shared/components/componentContainer/ComponentContainer";
+import EditUserForm from "./components/editUserForm/EditUserForm";
+import AssociateRoles from "./components/associateRoles/AssociateRoles";
 
 // Ant Design
 import { Table, Divider, Modal } from "antd";
@@ -14,18 +16,24 @@ import {
     deleteUser as deleteUserService,
     updateUser as updatedUserService
 } from "../../shared/services/UserServices";
-import EditUserForm from "./components/editUserForm/EditUserForm";
+import { getAllRoles } from "../../shared/services/RoleServices";
 
 const Users = () => {
     useEffect(() => {
         getUsers();
+        getRoles();
     }, []);
 
     const [allUsersState, setAllUsersState] = useState([]);
+    const [allRolesState, setAllRolesState] = useState([]);
     const [showAddUserModalState, setShowAddUserModalState] = useState(false);
     const [showUpdateUserModalState, setShowUpdateUserModalState] = useState(
         false
     );
+    const [
+        showAssociateRoleModalState,
+        setShowAssociateRoleModalState
+    ] = useState(false);
     const [showDeleteUserModalState, setShowDeleteUserModalState] = useState(
         false
     );
@@ -74,6 +82,12 @@ const Users = () => {
                         onClick={() => onUpdateClicked(record)}
                         style={{ cursor: "pointer" }}
                     />
+                    <Divider type="vertical" />
+                    <i
+                        className="far fa-address-card"
+                        onClick={() => onAssociateRoleClicked(record)}
+                        style={{ cursor: "pointer" }}
+                    />
                 </span>
             )
         }
@@ -85,22 +99,33 @@ const Users = () => {
         });
     };
 
+    const getRoles = async () => {
+        await getAllRoles().then(response => {
+            setAllRolesState(response);
+        });
+    };
+
     const addUser = async updatedUser => {
         setShowButtonLoadingState(true);
-        await saveUser({...updatedUser, date: null}).then(response => {
-            setShowButtonLoadingState(false);
-            setShowAddUserModalState(false);
-            getUsers()
-        }).catch(error => {
-            setShowButtonLoadingState(false);
-            console.error(error)
-        })
+        await saveUser({ ...updatedUser, date: null })
+            .then(response => {
+                setShowButtonLoadingState(false);
+                setShowAddUserModalState(false);
+                getUsers();
+            })
+            .catch(error => {
+                setShowButtonLoadingState(false);
+                console.error(error);
+            });
     };
 
     const updateUser = async updatedUser => {
         setShowButtonLoadingState(true);
 
-        await updatedUserService(selectedItemState.id, {...updatedUser, date: null})
+        await updatedUserService(selectedItemState.id, {
+            ...updatedUser,
+            date: null
+        })
             .then(response => {
                 setShowButtonLoadingState(false);
                 setShowUpdateUserModalState(false);
@@ -114,14 +139,16 @@ const Users = () => {
 
     const deleteUser = async () => {
         setShowButtonLoadingState(true);
-        await deleteUserService(selectedItemState.id).then(response => {
-            setShowButtonLoadingState(false);
-            setShowDeleteUserModalState(false);
-            getUsers()
-        }).catch(error => {
-            console.error(error)
-            setShowButtonLoadingState(false);
-        })
+        await deleteUserService(selectedItemState.id)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                setShowDeleteUserModalState(false);
+                getUsers();
+            })
+            .catch(error => {
+                console.error(error);
+                setShowButtonLoadingState(false);
+            });
     };
 
     const onDeleteClicked = item => {
@@ -132,6 +159,11 @@ const Users = () => {
     const onUpdateClicked = item => {
         setSelectedItemState(item);
         setShowUpdateUserModalState(true);
+    };
+
+    const onAssociateRoleClicked = item => {
+        setSelectedItemState(item);
+        setShowAssociateRoleModalState(true);
     };
 
     const pageModals = () => {
@@ -163,6 +195,16 @@ const Users = () => {
                     onSaveClicked={updatedUser => updateUser(updatedUser)}
                     onCancelClicked={() => setShowUpdateUserModalState(false)}
                     showLoading={showButtonLoadingState}
+                />
+                {/* Asociar Roles */}
+                <AssociateRoles
+                    allRoles={allRolesState}
+                    showModal={showAssociateRoleModalState}
+                    onCancelClicked={() =>
+                        setShowAssociateRoleModalState(false)
+                    }
+                    onOkClicked={() => setShowAssociateRoleModalState(false)}
+                    user={selectedItemState}
                 />
             </React.Fragment>
         );

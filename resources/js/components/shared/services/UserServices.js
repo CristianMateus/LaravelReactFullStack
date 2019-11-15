@@ -31,3 +31,24 @@ export const updateUser = async (updatedUserId, updatedUser) => {
         .then(response => response.data)
         .catch(error => console.error(error));
 };
+
+export const getUserRoles = async userId => {
+    return await axios
+        .get(`/api/userRoles/${userId}`)
+        .then(response => response.data)
+        .catch(error => console.error(error));
+};
+
+export const addUserRole = async (userId, roleId) => {
+    return await axios
+        .post(`/api/addUserRole/${userId}/${roleId}`)
+        .then(response => response.data)
+        .catch(error => console.error(error));
+};
+
+export const deleteUserRole = async (userId, roleId) => {
+    return await axios
+        .delete(`/api/deleteUserRole/${userId}/${roleId}`)
+        .then(response => response.data)
+        .catch(error => console.error(error));
+};

@@ -1,0 +1,34 @@
+.Card__contaier {
+    border: 1px solid #2c99fe;
+    padding: 0.6em;
+    border-radius: 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 3.2em;
+}
+
+.Card__selected-container {
+    width: 100%;
+}
+
+.Card__selected {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    i{
+        margin-top: -0.5em;
+        background: #93fb93;
+        color: black;
+        border-radius: 50%;
+    }
+}
+
+.Card__title{
+    font-weight: bolder;
+    font-size: 1.2em;
+    margin-top: -0.5em;
+}

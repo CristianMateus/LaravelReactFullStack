@@ -23,17 +23,6 @@ Route::resource('role', 'Api\RoleController');
 Route::resource('user', 'Api\UserController');
 Route::resource('module', 'Api\ModuleController');
 
-/**
-**Basic Routes for a RESTful service:
-**Route::get($uri, $callback);
-**Route::post($uri, $callback);
-**Route::put($uri, $callback);
-**Route::delete($uri, $callback);
-**
-*/
-
-// Route::post('company','Api\CompanyController@store');
- 
-// Route::put('company/{company}','Api\CompanyController@update');
- 
-// Route::delete('company/{id}', 'CompanyController@delete');
+Route::get('userRoles/{id}', 'Api\UserController@userRoles');
+Route::post('addUserRole/{userId}/{roleId}', 'Api\UserController@addUserRole');
+Route::delete('deleteUserRole/{userId}/{roleId}', 'Api\UserController@deleteUserRole');
