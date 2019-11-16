@@ -1,5 +1,6 @@
 // Componentes Propios
 import ComponentContainer from "../../shared/components/componentContainer/ComponentContainer";
+import AssociateModules from "./components/associateModules/AssociateModules";
 
 // Ant Design
 import { Table, Divider, Modal } from "antd";
@@ -14,14 +15,17 @@ import {
     updateRole as updateRoleService,
     deleteRole as deleteRoleService
 } from "../../shared/services/RoleServices";
+import { getAllModules } from "../../shared/services/ModuleServices";
 import EditRoleForm from "./components/editRoleForm/EditRoleForm";
 
 const Roles = () => {
     useEffect(() => {
         getRoles();
+        getModules();
     }, []);
 
     const [allRolesState, setAllRolesState] = useState([]);
+    const [allModulesState, setAllModulesState] = useState([]);
     const [showAddRoleModalState, setShowAddRoleModalState] = useState(false);
     const [showUpdateRoleModalState, setShowUpdateRoleModalState] = useState(
         false
@@ -29,6 +33,10 @@ const Roles = () => {
     const [showDeleteRoleModalState, setShowDeleteRoleModalState] = useState(
         false
     );
+    const [
+        showAssociateModuleModalState,
+        setShowAssociateModuleModalState
+    ] = useState(false);
     const [showButtonLoadingState, setShowButtonLoadingState] = useState(false);
     const [selectedItemState, setSelectedItemState] = useState(null);
 
@@ -59,6 +67,12 @@ const Roles = () => {
                         onClick={() => onUpdateClicked(record)}
                         style={{ cursor: "pointer" }}
                     />
+                    <Divider type="vertical" />
+                    <i
+                        className="fas fa-atlas"
+                        onClick={() => onAssociateModuleClicked(record)}
+                        style={{ cursor: "pointer" }}
+                    />
                 </span>
             )
         }
@@ -70,40 +84,52 @@ const Roles = () => {
         });
     };
 
+    const getModules = async () => {
+        await getAllModules().then(response => {
+            setAllModulesState(response);
+        });
+    };
+
     const addRole = async updatedRole => {
         setShowButtonLoadingState(true);
-        await saveRole(updatedRole).then(response => {
-            setShowButtonLoadingState(false);
-            setShowAddRoleModalState(false);
-            getRoles()
-        }).catch(error => {
-            setShowButtonLoadingState(false);
-            console.error(error)
-        })
+        await saveRole(updatedRole)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                setShowAddRoleModalState(false);
+                getRoles();
+            })
+            .catch(error => {
+                setShowButtonLoadingState(false);
+                console.error(error);
+            });
     };
 
     const updateRole = async updatedRole => {
         setShowButtonLoadingState(true);
-        await updateRoleService(selectedItemState.id, updatedRole).then(response => {
-            setShowButtonLoadingState(false);
-            setShowUpdateRoleModalState(false);
-            getRoles()
-        }).catch(error => {
-            setShowButtonLoadingState(false);
-            console.error(error)
-        })
+        await updateRoleService(selectedItemState.id, updatedRole)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                setShowUpdateRoleModalState(false);
+                getRoles();
+            })
+            .catch(error => {
+                setShowButtonLoadingState(false);
+                console.error(error);
+            });
     };
 
     const deleteRole = async () => {
         setShowButtonLoadingState(true);
-        await deleteRoleService(selectedItemState.id).then(response => {
-            setShowButtonLoadingState(false);
-            setShowDeleteRoleModalState(false);
-            getRoles()
-        }).catch(error => {
-            setShowButtonLoadingState(false);
-            console.error(error)
-        })
+        await deleteRoleService(selectedItemState.id)
+            .then(response => {
+                setShowButtonLoadingState(false);
+                setShowDeleteRoleModalState(false);
+                getRoles();
+            })
+            .catch(error => {
+                setShowButtonLoadingState(false);
+                console.error(error);
+            });
     };
 
     const onDeleteClicked = item => {
@@ -114,6 +140,11 @@ const Roles = () => {
     const onUpdateClicked = item => {
         setSelectedItemState(item);
         setShowUpdateRoleModalState(true);
+    };
+
+    const onAssociateModuleClicked = item => {
+        setSelectedItemState(item);
+        setShowAssociateModuleModalState(true);
     };
 
     const pageModals = () => {
@@ -145,6 +176,16 @@ const Roles = () => {
                     onSaveClicked={updatedRole => updateRole(updatedRole)}
                     onCancelClicked={() => setShowUpdateRoleModalState(false)}
                     showLoading={showButtonLoadingState}
+                />
+                {/* Asociar módulo */}
+                <AssociateModules
+                    allModules={allModulesState}
+                    showModal={showAssociateModuleModalState}
+                    onCancelClicked={() =>
+                        setShowAssociateModuleModalState(false)
+                    }
+                    onOkClicked={() => setShowAssociateModuleModalState(false)}
+                    role={selectedItemState}
                 />
             </React.Fragment>
         );

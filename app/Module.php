@@ -11,8 +11,8 @@ class Module extends Model
     /**
      * The modules that belong to the role.
      */
-    public function modules()
-    {
-        return $this->belongsToMany('App\Role', 'role_module', 'module_id', 'role_id')->withTimestamps();
-    }
+    // public function roleModules()
+    // {
+    //     return $this->belongsToMany('App\Role', 'role_module', 'module_id', 'role_id')->withTimestamps();
+    // }
 }

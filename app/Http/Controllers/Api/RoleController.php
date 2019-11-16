@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Role;
+use App\Module;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -98,5 +99,48 @@ class RoleController extends Controller
                 ->header('Content-Type', 'text/plain');
             }
         }
+    }
+
+        
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function roleModules($id)
+    {
+        //
+        $role = Role::find($id);
+        $roleModules = $role->modules;
+
+        return response()->json($roleModules);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function addRoleModule($roleId, $moduleId)
+    {
+        $role = Role::find($roleId);
+        $role->modules()->attach($moduleId);
+        return response('Módulo añadido', 200)
+            ->header('Content-Type', 'text/plain');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteRoleModule($moduleId, $roleId)
+    {
+        $role = Role::find($roleId);
+        $module = Module::find($moduleId);
+        $role->modules()->detach($module);
+
+        return response('Módulo eliminado', 200)
+            ->header('Content-Type', 'text/plain');
     }
 }
