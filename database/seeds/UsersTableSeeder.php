@@ -26,7 +26,8 @@ class UsersTableSeeder extends Seeder
             'name' => 'Usuario de prueba',
             'date' => Carbon::create('2000', '01', '01'),
             'email' => 'prueba@correo.com',
-            'phone' => 320
+            'phone' => 320,
+            'password' => 'contra123'
         ]);
     }
 }
